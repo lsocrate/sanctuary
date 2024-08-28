@@ -1,0 +1,66 @@
+:root {
+  --foreground-rgb: rgb(204, 204, 204);
+  --foreground-rgb-intense: rgb(242, 242, 242);
+  --background-emphasis: rgba(77, 153, 0, 0.9);
+  --background-emphasis-dark: rgb(71, 143, 0);
+  --background-emphasis-dark2: rgb(61, 122, 0);
+}
+
+body {
+  color: var(--foreground-rgb);
+  font-family: sans-serif;
+}
+
+a {
+  color: rgb(92, 184, 0);
+}
+
+select,
+textarea,
+input,
+button {
+  font: inherit;
+}
+
+body {
+  background-image: url("/static/background/fu-leng.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+}
+
+ul,
+ol {
+  margin: 0 0 0.5rem 1rem;
+}
+li {
+  list-style-type: disc;
+}
+li + li {
+  margin-top: 0.25rem;
+}
+
+h2,
+h3,
+h4 {
+  margin: 1rem 0 0.5rem;
+  line-height: 1.1;
+  color: var(--foreground-rgb-intense);
+}
+
+h2 {
+  font-size: 1.4rem;
+}
+
+h3 {
+  font-size: 1.2rem;
+}
+
+h4 {
+  font-size: 1rem;
+}
+
+p + p {
+  margin-top: 0.25rem;
+}
