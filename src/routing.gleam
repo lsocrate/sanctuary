@@ -8,6 +8,7 @@ pub type Route {
   About
   HowToPlay
   Community
+  Formats
 }
 
 pub fn route_of_uri(uri: Uri) {
@@ -15,6 +16,7 @@ pub fn route_of_uri(uri: Uri) {
     ["about"] -> About
     ["how-to-play"] -> HowToPlay
     ["community"] -> Community
+    ["formats"] -> Formats
     _ -> Home
   }
 }
@@ -25,6 +27,7 @@ pub fn path_of_route(route: Route) {
     About -> "/about"
     HowToPlay -> "/how-to-play"
     Community -> "/community"
+    Formats -> "/formats"
   }
 }
 

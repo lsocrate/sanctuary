@@ -4,6 +4,10 @@ pub fn p(content: String) {
   html.p([], [text(content)])
 }
 
+pub fn h2(content: String) {
+  html.h2([], [text(content)])
+}
+
 pub fn h3(content: String) {
   html.h3([], [text(content)])
 }

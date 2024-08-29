@@ -1,13 +1,18 @@
 import data/news.{sample_news}
 import gleam/uri.{type Uri}
 import lustre
+import lustre/attribute
 import lustre/effect
+import lustre/element.{type Element}
+import lustre/element/html
 import modem
 import page/about
 import page/community
+import page/formats
 import page/home
 import page/how_to_play
 import routing.{type Route}
+import ui/nav_bar.{nav_bar}
 
 pub fn main() {
   let app = lustre.application(init, update, view)
@@ -16,29 +21,44 @@ pub fn main() {
   Nil
 }
 
+type Model {
+  Model(route: Route)
+}
+
 fn init(_) {
-  #(routing.Home, modem.init(on_url_change))
+  #(Model(routing.Home), modem.init(on_url_change))
 }
 
 fn on_url_change(url: Uri) {
-  OnRouteChange(routing.route_of_uri(url))
+  RouteChanged(routing.route_of_uri(url))
 }
 
 type Msg {
-  OnRouteChange(Route)
+  RouteChanged(Route)
 }
 
-fn update(_, msg: Msg) {
+fn update(model, msg: Msg) {
   case msg {
-    OnRouteChange(route) -> #(route, effect.none())
+    RouteChanged(route) -> #(Model(route), effect.none())
   }
 }
 
-fn view(route: Route) {
-  case route {
+fn view(model: Model) {
+  with_navbar(case model.route {
     routing.Home -> home.page(sample_news)
     routing.About -> about.page()
     routing.HowToPlay -> how_to_play.page()
     routing.Community -> community.page()
-  }
+    routing.Formats -> formats.page()
+  })
+}
+
+fn with_navbar(content: Element(a)) {
+  html.div([], [
+    nav_bar(),
+    html.div(
+      [attribute.class("mt-12 flex min-h-screen max-w-[120ch] mx-auto")],
+      [content],
+    ),
+  ])
 }
