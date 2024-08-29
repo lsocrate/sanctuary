@@ -4,6 +4,7 @@ import lustre
 import lustre/effect
 import modem
 import page/about
+import page/community
 import page/home
 import page/how_to_play
 import routing.{type Route}
@@ -38,5 +39,6 @@ fn view(route: Route) {
     routing.Home -> home.page(sample_news)
     routing.About -> about.page()
     routing.HowToPlay -> how_to_play.page()
+    routing.Community -> community.page()
   }
 }

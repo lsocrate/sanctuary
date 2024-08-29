@@ -7,12 +7,14 @@ pub type Route {
   Home
   About
   HowToPlay
+  Community
 }
 
 pub fn route_of_uri(uri: Uri) {
   case uri.path_segments(uri.path) {
     ["about"] -> About
     ["how-to-play"] -> HowToPlay
+    ["community"] -> Community
     _ -> Home
   }
 }
@@ -22,6 +24,7 @@ pub fn path_of_route(route: Route) {
     Home -> "/"
     About -> "/about"
     HowToPlay -> "/how-to-play"
+    Community -> "/community"
   }
 }
 
