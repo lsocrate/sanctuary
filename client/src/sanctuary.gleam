@@ -1,4 +1,5 @@
-import data/news.{sample_news}
+import data/decklists
+import data/news
 import gleam/uri.{type Uri}
 import lustre
 import lustre/attribute
@@ -6,12 +7,13 @@ import lustre/effect
 import lustre/element.{type Element}
 import lustre/element/html
 import modem
+import page.{type Page}
 import page/about
 import page/community
+import page/decks
 import page/formats
 import page/home
 import page/how_to_play
-import routing.{type Route}
 import ui/nav_bar.{nav_bar}
 
 pub fn main() {
@@ -22,34 +24,42 @@ pub fn main() {
 }
 
 type Model {
-  Model(route: Route)
+  Model(page: Page)
 }
 
 fn init(_) {
-  #(Model(routing.Home), modem.init(on_url_change))
+  #(Model(page.Home(news.sample_news)), modem.init(on_url_change))
 }
 
 fn on_url_change(url: Uri) {
-  RouteChanged(routing.route_of_uri(url))
+  RouteChanged(case uri.path_segments(url.path) {
+    ["about"] -> page.About
+    ["how-to-play"] -> page.HowToPlay
+    ["community"] -> page.Community
+    ["formats"] -> page.Formats
+    ["decks"] -> page.Decks(decklists.sample_decks)
+    _ -> page.Home(news.sample_news)
+  })
 }
 
 type Msg {
-  RouteChanged(Route)
+  RouteChanged(Page)
 }
 
 fn update(model, msg: Msg) {
   case msg {
-    RouteChanged(route) -> #(Model(route), effect.none())
+    RouteChanged(page) -> #(Model(page:), effect.none())
   }
 }
 
 fn view(model: Model) {
-  with_navbar(case model.route {
-    routing.Home -> home.page(sample_news)
-    routing.About -> about.page()
-    routing.HowToPlay -> how_to_play.page()
-    routing.Community -> community.page()
-    routing.Formats -> formats.page()
+  with_navbar(case model.page {
+    page.Home(news) -> home.page(news)
+    page.About -> about.page()
+    page.HowToPlay -> how_to_play.page()
+    page.Community -> community.page()
+    page.Formats -> formats.page()
+    page.Decks(list_of_decks) -> decks.page(list_of_decks)
   })
 }
 

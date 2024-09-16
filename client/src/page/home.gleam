@@ -3,7 +3,7 @@ import gleam/list
 import lustre/attribute.{alt, class, height, href, src, target, width}
 import lustre/element.{type Element}
 import lustre/element/html.{a, div, h1, h3, img, li, ol, p, strong, text}
-import routing.{HowToPlay, link_to_route}
+import page
 import ui/content_box.{content_box}
 
 pub fn page(news: List(News)) -> Element(a) {
@@ -17,7 +17,7 @@ pub fn page(news: List(News)) -> Element(a) {
       ),
       p([], [
         text("If you're new, head on over to the "),
-        link_to_route(HowToPlay, [], [text("How To Play guide")]),
+        a([href(page.path_of_how_to_play)], [text("How To Play guide")]),
         text(" for a thorough explanation on how to use the site!"),
       ]),
     ]),
